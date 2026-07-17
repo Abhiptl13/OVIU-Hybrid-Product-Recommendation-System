@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="page-header">
+    <p class="tag">Analytics Dashboard</p>
+    <h1>Online retail dataset insights</h1>
+    <p>
+        This dashboard summarizes transactions, revenue, products, countries,
+        and sales trends from the cleaned online retail dataset.
+    </p>
+</section>
+
+{% if data %}
+<section class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Transactions</h3>
+        <p>{{ data.total_transactions }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Products</h3>
+        <p>{{ data.total_products }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Customers</h3>
+        <p>{{ data.total_customers }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <p>£{{ "%.2f"|format(data.total_revenue) }}</p>
+    </div>
+</section>
+
+<section class="chart-grid">
+    <div class="chart-card">
+        <div id="topProductsChart"></div>
+    </div>
+
+    <div class="chart-card">
+        <div id="topCountriesChart"></div>
+    </div>
+</section>
+
+<section class="chart-card wide-chart">
+    <div id="monthlyRevenueChart"></div>
+</section>
+
+<section class="page-header small-header">
+    <h2>Top Selling Products</h2>
+    <p>Products ranked by total quantity sold.</p>
+</section>
+
+<section class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Total Sold</th>
+                <th>Orders</th>
+                <th>Revenue</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in data.top_products %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ product.Description }}</td>
+                <td>{{ product.total_quantity }}</td>
+                <td>{{ product.orders }}</td>
+                <td>£{{ "%.2f"|format(product.total_revenue) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="page-header small-header">
+    <h2>Top Countries by Revenue</h2>
+    <p>Countries with the highest total sales revenue.</p>
+</section>
+
+<section class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Country</th>
+                <th>Total Revenue</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for country in data.top_countries %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ country.Country }}</td>
+                <td>£{{ "%.2f"|format(country.total_revenue) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% else %}
+<section class="form-card">
+    <h2>No dashboard data found</h2>
+    <p>Please run this command first:</p>
+    <pre>python scripts\train_recommender.py</pre>
+</section>
+{% endif %}
+
+{% if charts %}
+<script type="application/json" id="topProductsChartData">
+{{ charts.top_products_chart | safe }}
+</script>
+
+<script type="application/json" id="topCountriesChartData">
+{{ charts.top_countries_chart | safe }}
+</script>
+
+<script type="application/json" id="monthlyRevenueChartData">
+{{ charts.monthly_revenue_chart | safe }}
+</script>
+
+<script>
+    function loadChartData(elementId) {
+        const element = document.getElementById(elementId);
+
+        if (!element) {
+            return null;
+        }
+
+        return JSON.parse(element.textContent);
+    }
+
+    const topProductsChartData = loadChartData("topProductsChartData");
+    const topCountriesChartData = loadChartData("topCountriesChartData");
+    const monthlyRevenueChartData = loadChartData("monthlyRevenueChartData");
+
+    if (topProductsChartData) {
+        Plotly.newPlot(
+            "topProductsChart",
+            topProductsChartData.data,
+            topProductsChartData.layout,
+            {responsive: true, displayModeBar: false}
+        );
+    }
+
+    if (topCountriesChartData) {
+        Plotly.newPlot(
+            "topCountriesChart",
+            topCountriesChartData.data,
+            topCountriesChartData.layout,
+            {responsive: true, displayModeBar: false}
+        );
+    }
+
+    if (monthlyRevenueChartData) {
+        Plotly.newPlot(
+            "monthlyRevenueChart",
+            monthlyRevenueChartData.data,
+            monthlyRevenueChartData.layout,
+            {responsive: true, displayModeBar: false}
+        );
+    }
+</script>
+{% endif %}
+
+</body>
+</html>

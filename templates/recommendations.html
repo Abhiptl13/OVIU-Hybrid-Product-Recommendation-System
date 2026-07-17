@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="page-header">
+    <p class="tag">Hybrid ML Recommendation Engine</p>
+    <h1>Personalized product recommendations</h1>
+    <p>
+        Enter a product name or customer ID to generate recommendations using
+        market basket analysis, collaborative filtering, matrix factorization,
+        and customer segmentation.
+    </p>
+</section>
+
+<section class="form-card">
+    <form method="POST">
+        <select name="recommendation_type">
+            <option value="product" {% if recommendation_type == "product" %}selected{% endif %}>
+                Product-based recommendation
+            </option>
+
+            <option value="customer" {% if recommendation_type == "customer" %}selected{% endif %}>
+                Customer-based recommendation
+            </option>
+        </select>
+
+        <input
+            type="text"
+            name="product_name"
+            placeholder="Product example: HEART, BAG, LUNCH BOX, CHRISTMAS"
+            value="{{ product_name }}"
+        >
+
+        <input
+            type="text"
+            name="customer_id"
+            placeholder="Customer ID example: 13085"
+            value="{{ customer_id }}"
+        >
+
+        <button type="submit">Recommend</button>
+    </form>
+</section>
+
+{% if customer_segment %}
+<section class="ml-info-card">
+    <p class="tag">K-Means Customer Segmentation</p>
+    <h2>{{ customer_segment.segment }}</h2>
+
+    <div class="detail-stats">
+        <div>
+            <strong>£{{ "%.2f"|format(customer_segment.total_spent) }}</strong>
+            <span>Total Spent</span>
+        </div>
+
+        <div>
+            <strong>{{ customer_segment.total_orders }}</strong>
+            <span>Total Orders</span>
+        </div>
+
+        <div>
+            <strong>{{ customer_segment.unique_products }}</strong>
+            <span>Unique Products</span>
+        </div>
+    </div>
+
+    <p>
+        This customer segment was generated using K-Means clustering based on
+        purchase behavior, total spending, order frequency, and product variety.
+    </p>
+</section>
+{% endif %}
+
+{% if searched_products %}
+<section class="page-header small-header">
+    <h2>Matched Products</h2>
+    <p>Products matched from the dataset based on the entered product name.</p>
+</section>
+
+<section class="cards">
+    {% for product in searched_products %}
+    <div class="card">
+        <h3>{{ product.Description }}</h3>
+        <p><strong>Stock Code:</strong> {{ product.stock_code }}</p>
+        <p><strong>Total Sold:</strong> {{ product.total_quantity }}</p>
+        <p><strong>Total Revenue:</strong> £{{ "%.2f"|format(product.total_revenue) }}</p>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
+{% if purchased_products %}
+<section class="page-header small-header">
+    <h2>Customer Purchase History</h2>
+    <p>Products previously purchased by the selected customer.</p>
+</section>
+
+<section class="cards">
+    {% for product in purchased_products %}
+    <div class="card">
+        <h3>{{ product }}</h3>
+        <p>This product was found in the selected customer's purchase history.</p>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
+{% if recommended_products %}
+<section class="page-header small-header">
+    <h2>Recommended Products</h2>
+    <p>Recommendations generated from purchase behavior and ML model output.</p>
+</section>
+
+<section class="cards">
+    {% for product in recommended_products %}
+    <div class="card">
+        {% if product.product %}
+            <p class="category-pill">
+                {{ product.method if product.method else "ML Recommendation" }}
+            </p>
+            <h3>{{ product.product }}</h3>
+            <p><strong>Recommendation Score:</strong> {{ product.score }}</p>
+            <p>
+                Recommended using product similarity, customer behavior, or
+                frequently-bought-together patterns.
+            </p>
+        {% else %}
+            <p class="category-pill">Popularity-Based Recommendation</p>
+            <h3>{{ product.Description }}</h3>
+            <p><strong>Total Sold:</strong> {{ product.total_quantity }}</p>
+            <p><strong>Total Revenue:</strong> £{{ "%.2f"|format(product.total_revenue) }}</p>
+            <p>Recommended because this product has strong sales performance.</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
+<section class="page-header small-header">
+    <h2>Popular Products</h2>
+    <p>Baseline recommendations based on highest product sales.</p>
+</section>
+
+<section class="cards">
+    {% for product in popular_products %}
+    <div class="card">
+        <p class="category-pill">Popular Product</p>
+        <h3>{{ product.Description }}</h3>
+        <p><strong>Total Sold:</strong> {{ product.total_quantity }}</p>
+        <p><strong>Orders:</strong> {{ product.orders }}</p>
+        <p><strong>Total Revenue:</strong> £{{ "%.2f"|format(product.total_revenue) }}</p>
+    </div>
+    {% endfor %}
+</section>
+
+</body>
+</html>

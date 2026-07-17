@@ -1,0 +1,214 @@
+{
+  "total_transactions": 40077,
+  "total_products": 5357,
+  "total_customers": 5878,
+  "total_revenue": 20972594.57,
+  "top_products": [
+    {
+      "Description": "WORLD WAR 2 GLIDERS ASSTD DESIGNS",
+      "total_quantity": 110138,
+      "total_revenue": 25259.899999999998,
+      "orders": 1019
+    },
+    {
+      "Description": "WHITE HANGING HEART T-LIGHT HOLDER",
+      "total_quantity": 96683,
+      "total_revenue": 266923.55,
+      "orders": 5455
+    },
+    {
+      "Description": "ASSORTED COLOUR BIRD ORNAMENT",
+      "total_quantity": 81809,
+      "total_revenue": 132187.91999999998,
+      "orders": 2807
+    },
+    {
+      "Description": "PAPER CRAFT , LITTLE BIRDIE",
+      "total_quantity": 80995,
+      "total_revenue": 168469.6,
+      "orders": 1
+    },
+    {
+      "Description": "JUMBO BAG RED RETROSPOT",
+      "total_quantity": 79279,
+      "total_revenue": 150935.56,
+      "orders": 3269
+    },
+    {
+      "Description": "MEDIUM CERAMIC TOP STORAGE JAR",
+      "total_quantity": 78033,
+      "total_revenue": 81700.92000000001,
+      "orders": 247
+    },
+    {
+      "Description": "BROCADE RING PURSE",
+      "total_quantity": 71430,
+      "total_revenue": 14959.19,
+      "orders": 456
+    },
+    {
+      "Description": "PACK OF 60 PINK PAISLEY CAKE CASES",
+      "total_quantity": 56794,
+      "total_revenue": 28490.98,
+      "orders": 1993
+    },
+    {
+      "Description": "60 TEATIME FAIRY CAKE CASES",
+      "total_quantity": 54716,
+      "total_revenue": 27404.22,
+      "orders": 2127
+    },
+    {
+      "Description": "SMALL POPCORN HOLDER",
+      "total_quantity": 49948,
+      "total_revenue": 44090.13,
+      "orders": 1407
+    },
+    {
+      "Description": "PACK OF 72 RETROSPOT CAKE CASES",
+      "total_quantity": 49805,
+      "total_revenue": 28927.920000000002,
+      "orders": 1708
+    },
+    {
+      "Description": "PACK OF 72 RETRO SPOT CAKE CASES",
+      "total_quantity": 46755,
+      "total_revenue": 24069.280000000002,
+      "orders": 1410
+    },
+    {
+      "Description": "MINI PAINT SET VINTAGE",
+      "total_quantity": 44405,
+      "total_revenue": 28284.79,
+      "orders": 714
+    },
+    {
+      "Description": "ASSORTED COLOURS SILK FAN",
+      "total_quantity": 44365,
+      "total_revenue": 33041.55,
+      "orders": 991
+    },
+    {
+      "Description": "COLOUR GLASS T-LIGHT HOLDER HANGING",
+      "total_quantity": 40839,
+      "total_revenue": 25475.050000000003,
+      "orders": 1259
+    }
+  ],
+  "top_countries": [
+    {
+      "Country": "United Kingdom",
+      "total_revenue": 17870977.777
+    },
+    {
+      "Country": "EIRE",
+      "total_revenue": 664431.78
+    },
+    {
+      "Country": "Netherlands",
+      "total_revenue": 554232.34
+    },
+    {
+      "Country": "Germany",
+      "total_revenue": 431262.461
+    },
+    {
+      "Country": "France",
+      "total_revenue": 356944.6
+    },
+    {
+      "Country": "Australia",
+      "total_revenue": 169968.11000000002
+    },
+    {
+      "Country": "Spain",
+      "total_revenue": 109178.53
+    },
+    {
+      "Country": "Switzerland",
+      "total_revenue": 101011.29
+    },
+    {
+      "Country": "Sweden",
+      "total_revenue": 91903.72
+    },
+    {
+      "Country": "Denmark",
+      "total_revenue": 69862.19
+    }
+  ],
+  "monthly_revenue": [
+    {
+      "month": "2010-07",
+      "total_revenue": 650712.94
+    },
+    {
+      "month": "2010-08",
+      "total_revenue": 697274.91
+    },
+    {
+      "month": "2010-09",
+      "total_revenue": 924333.0109999999
+    },
+    {
+      "month": "2010-10",
+      "total_revenue": 1165483.91
+    },
+    {
+      "month": "2010-11",
+      "total_revenue": 1470272.482
+    },
+    {
+      "month": "2010-12",
+      "total_revenue": 1262598.79
+    },
+    {
+      "month": "2011-01",
+      "total_revenue": 691364.56
+    },
+    {
+      "month": "2011-02",
+      "total_revenue": 523631.89
+    },
+    {
+      "month": "2011-03",
+      "total_revenue": 717639.36
+    },
+    {
+      "month": "2011-04",
+      "total_revenue": 537808.621
+    },
+    {
+      "month": "2011-05",
+      "total_revenue": 770536.02
+    },
+    {
+      "month": "2011-06",
+      "total_revenue": 761739.9
+    },
+    {
+      "month": "2011-07",
+      "total_revenue": 719221.191
+    },
+    {
+      "month": "2011-08",
+      "total_revenue": 759138.38
+    },
+    {
+      "month": "2011-09",
+      "total_revenue": 1058590.172
+    },
+    {
+      "month": "2011-10",
+      "total_revenue": 1154979.3
+    },
+    {
+      "month": "2011-11",
+      "total_revenue": 1509496.33
+    },
+    {
+      "month": "2011-12",
+      "total_revenue": 638810.68
+    }
+  ]
+}

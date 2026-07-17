@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Shop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="page-header">
+    <p class="tag">Product Purchasing Website</p>
+    <h1>Shop products with ML-powered recommendations</h1>
+    <p>
+        Browse products generated from the online retail dataset. Since the dataset does not
+        include real images, product cards use category-based placeholder visuals.
+    </p>
+</section>
+
+<section class="form-card">
+    <form method="GET" action="/shop">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search products, example: bag, heart, lunch, christmas"
+            value="{{ search_text }}"
+        >
+
+        <select name="category">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
+                {{ category }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+</section>
+
+<section class="shop-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <div class="product-visual">
+            <span>{{ product.visual_icon }}</span>
+        </div>
+
+        <div class="product-body">
+            <p class="category-pill">{{ product.category }}</p>
+            <h3>{{ product.name }}</h3>
+            <p class="product-code">Stock Code: {{ product.stock_code }}</p>
+            <p class="product-price">£{{ "%.2f"|format(product.price) }}</p>
+            <p class="product-meta">Sold: {{ product.total_sold }} | Orders: {{ product.orders }}</p>
+
+            <div class="product-actions">
+                <a class="btn small-btn" href="/product/{{ product.stock_code }}">View</a>
+
+                <form method="POST" action="/add-to-cart/{{ product.stock_code }}">
+                    <button class="small-btn" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+</body>
+</html>

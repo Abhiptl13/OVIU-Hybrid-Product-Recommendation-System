@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Product Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div>
+        <p class="tag">Personalized Product Recommendation System</p>
+        <h1>Smart product recommendations for custom apparel and creative products.</h1>
+        <p>
+            OVIU analyzes online retail transactions to recommend products based on
+            popularity, customer purchase behavior, and frequently bought together items.
+        </p>
+
+        <a class="btn" href="/recommendations">Get Recommendations</a>
+        <a class="btn secondary-btn" href="/dashboard">View Dashboard</a>
+    </div>
+</section>
+
+<section class="cards">
+    <div class="card">
+        <h3>Popularity-Based Recommendation</h3>
+        <p>Recommends products with the highest sales and strongest customer demand.</p>
+    </div>
+
+    <div class="card">
+        <h3>Frequently Bought Together</h3>
+        <p>Finds products often purchased in the same invoice or shopping basket.</p>
+    </div>
+
+    <div class="card">
+        <h3>Customer-Based Recommendation</h3>
+        <p>Uses customer purchase history to suggest related products.</p>
+    </div>
+</section>
+
+<section class="page-header small-header">
+    <h2>Top Products from Dataset</h2>
+    <p>These products are generated from the cleaned online retail dataset.</p>
+</section>
+
+<section class="cards">
+    {% for product in popular_products %}
+    <div class="card">
+        <h3>{{ product.Description }}</h3>
+        <p><strong>Total Sold:</strong> {{ product.total_quantity }}</p>
+        <p><strong>Orders:</strong> {{ product.orders }}</p>
+        <p><strong>Revenue:</strong> £{{ "%.2f"|format(product.total_revenue) }}</p>
+    </div>
+    {% endfor %}
+</section>
+
+</body>
+</html>

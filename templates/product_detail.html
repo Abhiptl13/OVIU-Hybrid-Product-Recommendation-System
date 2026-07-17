@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Product Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="product-detail-layout">
+    <div class="product-detail-visual">
+        <span>{{ product.visual_icon }}</span>
+    </div>
+
+    <div class="product-detail-info">
+        <p class="category-pill">{{ product.category }}</p>
+        <h1>{{ product.name }}</h1>
+        <p class="product-code">Stock Code: {{ product.stock_code }}</p>
+        <p class="product-price large-price">£{{ "%.2f"|format(product.price) }}</p>
+
+        <p>
+            This is a product purchasing simulation for the OVIU e-commerce recommendation system.
+            The original dataset does not include product image URLs, so this page uses
+            category-based placeholder visuals.
+        </p>
+
+        <div class="detail-stats">
+            <div>
+                <strong>{{ product.total_sold }}</strong>
+                <span>Total Sold</span>
+            </div>
+
+            <div>
+                <strong>{{ product.orders }}</strong>
+                <span>Orders</span>
+            </div>
+
+            <div>
+                <strong>£{{ "%.2f"|format(product.total_revenue) }}</strong>
+                <span>Revenue</span>
+            </div>
+        </div>
+
+        <form method="POST" action="/add-to-cart/{{ product.stock_code }}">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+</section>
+
+<section class="ml-info-card">
+    <p class="tag">Machine Learning Recommendation Layer</p>
+    <h2>Hybrid ML recommendation system</h2>
+    <p>
+        This product page shows recommendations generated using multiple ML techniques:
+        TF-IDF content-based filtering, item-based collaborative filtering, matrix factorization,
+        and market basket analysis.
+    </p>
+</section>
+
+{% for section_name, products in ml_recommendation_sections.items() %}
+<section class="page-header small-header">
+    <h2>{{ section_name }}</h2>
+
+    {% if section_name == "Content-Based Filtering" %}
+    <p>Similar products based on product description text using TF-IDF and cosine similarity.</p>
+    {% elif section_name == "Collaborative Filtering" %}
+    <p>Products recommended using customer-product purchase behavior.</p>
+    {% elif section_name == "Matrix Factorization" %}
+    <p>Products recommended using hidden patterns learned with TruncatedSVD.</p>
+    {% elif section_name == "Market Basket Analysis" %}
+    <p>Products frequently bought together in the same invoice or shopping basket.</p>
+    {% endif %}
+</section>
+
+<section class="shop-grid">
+    {% for recommended_product in products %}
+    <div class="product-card">
+        <div class="product-visual">
+            <span>{{ recommended_product.visual_icon }}</span>
+        </div>
+
+        <div class="product-body">
+            <p class="category-pill">{{ recommended_product.category }}</p>
+            <h3>{{ recommended_product.name }}</h3>
+            <p class="product-code">Stock Code: {{ recommended_product.stock_code }}</p>
+            <p class="product-price">£{{ "%.2f"|format(recommended_product.price) }}</p>
+
+            {% if recommended_product.ml_score is defined %}
+            <p class="product-meta">
+                ML Score: {{ recommended_product.ml_score }}
+            </p>
+            {% endif %}
+
+            <div class="product-actions">
+                <a class="btn small-btn" href="/product/{{ recommended_product.stock_code }}">View</a>
+
+                <form method="POST" action="/add-to-cart/{{ recommended_product.stock_code }}">
+                    <button class="small-btn" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endfor %}
+
+</body>
+</html>

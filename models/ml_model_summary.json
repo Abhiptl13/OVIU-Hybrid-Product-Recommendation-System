@@ -1,0 +1,22 @@
+{
+  "project": "OVIU Hybrid Product Recommendation System for E-Commerce Purchasing Website",
+  "dataset_rows_after_cleaning": 1041670,
+  "products_used_for_ml": 500,
+  "ml_techniques": [
+    "Popularity-Based Recommendation",
+    "Market Basket / Frequently Bought Together Recommendation",
+    "Content-Based Filtering using TF-IDF and Cosine Similarity",
+    "Item-Based Collaborative Filtering using Customer-Product Interaction Matrix",
+    "Matrix Factorization using TruncatedSVD",
+    "Customer Segmentation using K-Means Clustering"
+  ],
+  "website_integration": [
+    "Home page",
+    "Shop page",
+    "Product detail page",
+    "Cart simulation",
+    "Recommendation page",
+    "Dashboard analytics"
+  ],
+  "dataset_limitation": "The dataset does not include product image URLs, so the website uses category-based placeholder visuals."
+}

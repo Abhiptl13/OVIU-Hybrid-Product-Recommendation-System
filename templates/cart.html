@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OVIU | Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <h2>OVIU</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="/shop">Shop</a>
+        <a href="/recommendations">Recommendations</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/cart">Cart</a>
+    </div>
+</nav>
+
+<section class="page-header">
+    <p class="tag">Shopping Cart</p>
+    <h1>Your cart</h1>
+    <p>This is a purchasing simulation for the OVIU e-commerce recommendation project.</p>
+</section>
+
+{% if cart_items %}
+<section class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Stock Code</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.stock_code }}</td>
+                <td>£{{ "%.2f"|format(item.product.price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>£{{ "%.2f"|format(item.item_total) }}</td>
+                <td>
+                    <form method="POST" action="/remove-from-cart/{{ item.product.stock_code }}">
+                        <button class="small-btn" type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="cart-summary">
+    <h2>Cart Total: £{{ "%.2f"|format(cart_total) }}</h2>
+
+    <form method="POST" action="/clear-cart">
+        <button type="submit">Clear Cart</button>
+    </form>
+</section>
+
+{% else %}
+<section class="form-card">
+    <h2>Your cart is empty</h2>
+    <p>Go to the shop page and add products to the cart.</p>
+    <a class="btn" href="/shop">Go to Shop</a>
+</section>
+{% endif %}
+
+<section class="page-header small-header">
+    <h2>Recommended Add-ons</h2>
+    <p>Popular products suggested while shopping.</p>
+</section>
+
+<section class="shop-grid">
+    {% for product in recommended_products %}
+    <div class="product-card">
+        <div class="product-visual">
+            <span>{{ product.visual_icon }}</span>
+        </div>
+
+        <div class="product-body">
+            <p class="category-pill">{{ product.category }}</p>
+            <h3>{{ product.name }}</h3>
+            <p class="product-price">£{{ "%.2f"|format(product.price) }}</p>
+
+            <div class="product-actions">
+                <a class="btn small-btn" href="/product/{{ product.stock_code }}">View</a>
+
+                <form method="POST" action="/add-to-cart/{{ product.stock_code }}">
+                    <button class="small-btn" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+</body>
+</html>
